@@ -21,7 +21,7 @@ namespace TravelApi.Controllers
         {
 
 
-            return await _db.Destinations 
+            return await _db.Destinations
                                         .Include(destination => destination.Reviews)
                                         .ToListAsync();
         }
@@ -30,14 +30,16 @@ namespace TravelApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Destination>> GetDestination(int id)
         {
-            Destination destination = await _db.Destinations.FindAsync(id);
+            Destination destination = await _db.Destinations
+                                                            .Include(destination => destination.Reviews)
+                                                            .FirstOrDefaultAsync(destination => destination.DestinationId == id);
 
             if (destination == null)
             {
                 return NotFound();
             }
 
-            return destination; 
+            return destination;
         }
 
 
