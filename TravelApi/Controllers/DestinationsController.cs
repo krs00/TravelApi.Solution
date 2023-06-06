@@ -15,26 +15,24 @@ namespace CretaceousApi.Controllers
             _db = db;
         }
 
-        // // GET api/animals
-        // [HttpGet]
-        // public async Task<ActionResult<IEnumerable<Animal>>> Get()
-        // {
-        //     return await _db.Animals.ToListAsync();
-        // }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Destination>>> Get()
+        {
+            return await _db.Destinations.ToListAsync();
+        }
 
-        // // GET: api/Animals/5
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<Animal>> GetAnimal(int id)
-        // {
-        //     Animal animal = await _db.Animals.FindAsync(id);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Destination>> GetDestination(int id)
+        {
+            Destination destination = await _db.Destinations.FindAsync(id);
 
-        //     if (animal == null)
-        //     {
-        //         return NotFound();
-        //     }
+            if (destination == null)
+            {
+                return NotFound();
+            }
 
-        //     return animal;
-    // }
+            return destination;
+    }
 
 
 
