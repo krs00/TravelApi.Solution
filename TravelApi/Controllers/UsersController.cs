@@ -6,11 +6,11 @@ namespace TravelApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewsController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly TravelApiContext _db;
 
-        public ReviewsController(TravelApiContext db)
+        public UsersController(TravelApiContext db)
         {
             _db = db;
         }
