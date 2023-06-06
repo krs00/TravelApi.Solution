@@ -15,6 +15,7 @@ namespace CretaceousApi.Controllers
             _db = db;
         }
 
+        // READ
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Destination>>> Get()
         {
@@ -32,9 +33,70 @@ namespace CretaceousApi.Controllers
             }
 
             return destination;
-    }
-
-
-
         }
+
+        // CREATE
+        [HttpPost]
+        public async Task<ActionResult<Destination>> Post(Destination destination)
+        {
+            _db.Destinations.Add(destination);
+            await _db.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetDestination), new { id = destination.DestinationId }, destination);
+        }
+
+        // UPDATE
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, Destination destination)
+        {
+            if (id != destination.DestinationId)
+            {
+                return BadRequest();
+            }
+
+            _db.Destinations.Update(destination);
+
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DestinationExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool DestinationExists(int id)
+        {
+            return _db.Destinations.Any(e => e.DestinationId == id);
+        }
+
+        // DELETE
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteDestination(int id)
+        {
+            Destination destination = await _db.Destinations.FindAsync(id);
+            if (destination == null)
+            {
+                return NotFound();
+            }
+
+            _db.Destinations.Remove(destination);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+
+
+
     }
+}
