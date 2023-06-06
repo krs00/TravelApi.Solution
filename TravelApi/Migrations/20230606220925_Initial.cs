@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace TravelApi.Migrations
 {
-    public partial class AddInitial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,21 +34,6 @@ namespace TravelApi.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -58,9 +42,7 @@ namespace TravelApi.Migrations
                     Message = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Rating = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DestinationId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    DestinationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,12 +52,6 @@ namespace TravelApi.Migrations
                         column: x => x.DestinationId,
                         principalTable: "Destinations",
                         principalColumn: "DestinationId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reviews_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -93,35 +69,20 @@ namespace TravelApi.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "UserId", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Kymani" },
-                    { 2, "Qayden" },
-                    { 3, "Renee" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Reviews",
-                columns: new[] { "ReviewId", "Date", "DestinationId", "Message", "Rating", "UserId" },
+                columns: new[] { "ReviewId", "DestinationId", "Message", "Rating" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 6, 6, 14, 4, 45, 581, DateTimeKind.Local).AddTicks(9110), 1, "Cool spot!", 5, 2 },
-                    { 2, new DateTime(2023, 6, 6, 14, 4, 45, 581, DateTimeKind.Local).AddTicks(9150), 4, "Very Busy Place!", 7, 3 },
-                    { 3, new DateTime(2023, 6, 6, 14, 4, 45, 581, DateTimeKind.Local).AddTicks(9150), 3, "Woah nice views!", 10, 2 },
-                    { 4, new DateTime(2023, 6, 6, 14, 4, 45, 581, DateTimeKind.Local).AddTicks(9150), 1, "A good place to learn how to program", 6, 1 }
+                    { 1, 3, "Cool spot!", 5 },
+                    { 2, 3, "Rad CounCil!!", 8 },
+                    { 3, 1, "Cool spot Epicodus!", 5 },
+                    { 4, 1, "Cool Code!!", 5 }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_DestinationId",
                 table: "Reviews",
                 column: "DestinationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserId",
-                table: "Reviews",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -131,9 +92,6 @@ namespace TravelApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Destinations");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }
