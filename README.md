@@ -10,7 +10,7 @@
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Port=5000;database=travel_api;uid=[USERNAME];pwd=[PASSWORD];"
+    "DefaultConnection": "Server=localhost;Port=3306;database=travel_api;uid=[USERNAME];pwd=[PASSWORD];"
   }
 }
 
