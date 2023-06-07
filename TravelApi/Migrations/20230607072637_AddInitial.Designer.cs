@@ -10,8 +10,8 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    [Migration("20230606220925_Initial")]
-    partial class Initial
+    [Migration("20230607072637_AddInitial")]
+    partial class AddInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,41 +100,30 @@ namespace TravelApi.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ReviewId");
 
                     b.HasIndex("DestinationId");
 
-                    b.ToTable("Reviews");
+                    b.HasIndex("UserId");
 
-                    b.HasData(
-                        new
-                        {
-                            ReviewId = 1,
-                            DestinationId = 3,
-                            Message = "Cool spot!",
-                            Rating = 5
-                        },
-                        new
-                        {
-                            ReviewId = 2,
-                            DestinationId = 3,
-                            Message = "Rad CounCil!!",
-                            Rating = 8
-                        },
-                        new
-                        {
-                            ReviewId = 3,
-                            DestinationId = 1,
-                            Message = "Cool spot Epicodus!",
-                            Rating = 5
-                        },
-                        new
-                        {
-                            ReviewId = 4,
-                            DestinationId = 1,
-                            Message = "Cool Code!!",
-                            Rating = 5
-                        });
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("TravelApi.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TravelApi.Models.Review", b =>
@@ -144,9 +133,20 @@ namespace TravelApi.Migrations
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("TravelApi.Models.User", null)
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TravelApi.Models.Destination", b =>
+                {
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("TravelApi.Models.User", b =>
                 {
                     b.Navigation("Reviews");
                 });

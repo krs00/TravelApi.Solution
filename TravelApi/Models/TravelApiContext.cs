@@ -6,6 +6,7 @@ namespace TravelApi.Models
     {
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public TravelApiContext(DbContextOptions<TravelApiContext> options) : base(options)
         {
@@ -25,20 +26,8 @@ namespace TravelApi.Models
 
               );
 
-            builder.Entity<Review>()
-              .HasData(
-                new Review { ReviewId = 1, Message = "Cool spot!", Rating = 5, DestinationId = 3},
-                new Review { ReviewId = 2, Message = "Rad CounCil!!", Rating = 8, DestinationId = 3},
-                new Review { ReviewId = 3, Message = "Cool spot Epicodus!", Rating = 5, DestinationId = 1},
-                new Review { ReviewId = 4, Message = "Cool Code!!", Rating = 5, DestinationId = 1}
 
-
-              );
 
         }
-
-
-
-
     }
 }
