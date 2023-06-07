@@ -13,14 +13,12 @@ namespace TravelApi.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Destinations",
+                name: "Cities",
                 columns: table => new
                 {
-                    DestinationId = table.Column<int>(type: "int", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    City = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Country = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -29,7 +27,7 @@ namespace TravelApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Destinations", x => x.DestinationId);
+                    table.PrimaryKey("PK_Cities", x => x.CityId);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -58,16 +56,16 @@ namespace TravelApi.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    DestinationId = table.Column<int>(type: "int", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reviews", x => x.ReviewId);
                     table.ForeignKey(
-                        name: "FK_Reviews_Destinations_DestinationId",
-                        column: x => x.DestinationId,
-                        principalTable: "Destinations",
-                        principalColumn: "DestinationId",
+                        name: "FK_Reviews_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "CityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reviews_Users_UserId",
@@ -79,21 +77,31 @@ namespace TravelApi.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.InsertData(
-                table: "Destinations",
-                columns: new[] { "DestinationId", "City", "Country", "Description", "Name" },
+                table: "Cities",
+                columns: new[] { "CityId", "Country", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Portland", "USA", "A programming school", "Epicodus" },
-                    { 2, "Portland", "USA", "City center", "Pioneer Square" },
-                    { 3, "Portland", "USA", "City Park", "Council Crest" },
-                    { 4, "Tokyo", "Japan", "Pedestrian Scramble", "Shibuya Crossing" },
-                    { 5, "Tokyo", "Japan", "Lookout Point", "Tokyo Tower" }
+                    { 1, "USA", "Rainy", "Portland" },
+                    { 2, "USA", "Very Rainy", "Seattle" },
+                    { 3, "USA", "Hot", "Austin" },
+                    { 4, "Japan", "Cool", "Tokyo" },
+                    { 5, "Japan", "Looks Cool", "Osaka" }
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_DestinationId",
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Name" },
+                values: new object[] { 1, "Kymani" });
+
+            migrationBuilder.InsertData(
                 table: "Reviews",
-                column: "DestinationId");
+                columns: new[] { "ReviewId", "CityId", "Message", "Rating", "UserId" },
+                values: new object[] { 1, 1, "An okay city", 5, 1 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_CityId",
+                table: "Reviews",
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_UserId",
@@ -107,7 +115,7 @@ namespace TravelApi.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "Destinations");
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "Users");

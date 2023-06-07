@@ -4,7 +4,7 @@ namespace TravelApi.Models
 {
     public class TravelApiContext : DbContext
     {
-        public DbSet<Destination> Destinations { get; set; }
+        public DbSet<City> Cities { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
 
@@ -14,17 +14,27 @@ namespace TravelApi.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Destination>()
-              .HasData(
+            builder.Entity<City>()
+            .HasData(
 
-                new Destination { DestinationId = 1, Name = "Epicodus", City = "Portland", Country = "USA", Description = "A programming school" },
-                new Destination { DestinationId = 2, Name = "Pioneer Square", City = "Portland", Country = "USA", Description = "City center" },
-                new Destination { DestinationId = 3, Name = "Council Crest", City = "Portland", Country = "USA", Description = "City Park" },
+                new City { CityId = 1, Name = "Portland", Country = "USA", Description = "Rainy" },
+                new City { CityId = 2, Name = "Seattle", Country = "USA", Description = "Very Rainy" },
+                new City { CityId = 3, Name = "Austin", Country = "USA", Description = "Hot" },
+                new City { CityId = 4, Name = "Tokyo", Country = "Japan", Description = "Cool" },
+                new City { CityId = 5, Name = "Osaka", Country = "Japan", Description = "Looks Cool" });
 
-                new Destination { DestinationId = 4, Name = "Shibuya Crossing", City = "Tokyo", Country = "Japan", Description = "Pedestrian Scramble" },
-                new Destination { DestinationId = 5, Name = "Tokyo Tower", City = "Tokyo", Country = "Japan", Description = "Lookout Point" } 
+            builder.Entity<Review>()
+            .HasData(
 
-              );
+              new Review { ReviewId = 1, Message = "An okay city", Rating = 5, UserId = 1, CityId = 1 }
+            );
+
+            builder.Entity<User>()
+            .HasData(
+
+            new User { UserId = 1, Name = "Kymani"}
+
+            );
 
 
 

@@ -10,7 +10,7 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    [Migration("20230607072637_AddInitial")]
+    [Migration("20230607183953_AddInitial")]
     partial class AddInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,14 +20,11 @@ namespace TravelApi.Migrations
                 .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("TravelApi.Models.Destination", b =>
+            modelBuilder.Entity("TravelApi.Models.City", b =>
                 {
-                    b.Property<int>("DestinationId")
+                    b.Property<int>("CityId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<string>("City")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("Country")
                         .HasColumnType("longtext");
@@ -38,50 +35,45 @@ namespace TravelApi.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.HasKey("DestinationId");
+                    b.HasKey("CityId");
 
-                    b.ToTable("Destinations");
+                    b.ToTable("Cities");
 
                     b.HasData(
                         new
                         {
-                            DestinationId = 1,
-                            City = "Portland",
+                            CityId = 1,
                             Country = "USA",
-                            Description = "A programming school",
-                            Name = "Epicodus"
+                            Description = "Rainy",
+                            Name = "Portland"
                         },
                         new
                         {
-                            DestinationId = 2,
-                            City = "Portland",
+                            CityId = 2,
                             Country = "USA",
-                            Description = "City center",
-                            Name = "Pioneer Square"
+                            Description = "Very Rainy",
+                            Name = "Seattle"
                         },
                         new
                         {
-                            DestinationId = 3,
-                            City = "Portland",
+                            CityId = 3,
                             Country = "USA",
-                            Description = "City Park",
-                            Name = "Council Crest"
+                            Description = "Hot",
+                            Name = "Austin"
                         },
                         new
                         {
-                            DestinationId = 4,
-                            City = "Tokyo",
+                            CityId = 4,
                             Country = "Japan",
-                            Description = "Pedestrian Scramble",
-                            Name = "Shibuya Crossing"
+                            Description = "Cool",
+                            Name = "Tokyo"
                         },
                         new
                         {
-                            DestinationId = 5,
-                            City = "Tokyo",
+                            CityId = 5,
                             Country = "Japan",
-                            Description = "Lookout Point",
-                            Name = "Tokyo Tower"
+                            Description = "Looks Cool",
+                            Name = "Osaka"
                         });
                 });
 
@@ -91,7 +83,7 @@ namespace TravelApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("DestinationId")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Message")
@@ -105,11 +97,21 @@ namespace TravelApi.Migrations
 
                     b.HasKey("ReviewId");
 
-                    b.HasIndex("DestinationId");
+                    b.HasIndex("CityId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            ReviewId = 1,
+                            CityId = 1,
+                            Message = "An okay city",
+                            Rating = 5,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("TravelApi.Models.User", b =>
@@ -124,13 +126,20 @@ namespace TravelApi.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Name = "Kymani"
+                        });
                 });
 
             modelBuilder.Entity("TravelApi.Models.Review", b =>
                 {
-                    b.HasOne("TravelApi.Models.Destination", null)
+                    b.HasOne("TravelApi.Models.City", null)
                         .WithMany("Reviews")
-                        .HasForeignKey("DestinationId")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -141,7 +150,7 @@ namespace TravelApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TravelApi.Models.Destination", b =>
+            modelBuilder.Entity("TravelApi.Models.City", b =>
                 {
                     b.Navigation("Reviews");
                 });

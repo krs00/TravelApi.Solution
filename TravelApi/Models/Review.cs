@@ -6,6 +6,6 @@ namespace TravelApi.Models
         public string Message { get; set; }
         public int Rating { get; set; }
         public int UserId { get; set; } // FOREIGN KEY
-        public int DestinationId { get; set; } // FOREIGN KEY
+        public int CityId { get; set; } // FOREIGN KEY
     }
 }
