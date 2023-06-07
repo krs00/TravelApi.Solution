@@ -52,11 +52,11 @@ namespace TravelApi.Controllers
     }
 
 
-		 // PUT: api/destinations/3
+    // PUT: api/destinations/3
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Destination destination)
     {
-      if (id != destination.DestinationId) 
+      if (id != destination.DestinationId)
       {
         return BadRequest();
       }
@@ -87,7 +87,7 @@ namespace TravelApi.Controllers
       return _db.Destinations.Any(e => e.DestinationId == id);
     }
 
-		    // DELETE: api/Destinations/3
+    // DELETE: api/Destinations/3
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDestination(int id)
     {
