@@ -1,5 +1,5 @@
 
-// THIS IS FOR APPSETTINGS
+// THIS IS FOR appsettings.json
 
 {
   "Logging": {
@@ -14,7 +14,7 @@
   }
 }
 
-// APPSETTINGS DEVELOPMENT CONFIG 
+// APPSETTINGS DEVELOPMENT CONFIG    appsettings.Development.json
 
 {
   "Logging": {
